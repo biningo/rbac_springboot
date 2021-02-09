@@ -41,6 +41,9 @@ create table user
     password      VARCHAR(50)  NOT NULL,
     avatar_url    VARCHAR(200),
     user_describe VARCHAR(300),
+    update_time   TIMESTAMP    NOT NULL,
+    create_time   TIMESTAMP    NOT NULL,
+    delete_time   TIMESTAMP,
     role_id       INT          NOT NULL,
     FOREIGN KEY fk_role (role_id) REFERENCES role (id)
 ) ENGINE = InnoDB
