@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.icepan.rbac.dao.ApiMapper">
+    <resultMap id="BaseResultMap" type="cloud.icepan.rbac.model.Api">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="url_path" property="urlPath" jdbcType="VARCHAR"/>
+        <result column="api_describe" property="apiDescribe" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="BOOLEAN"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <sql id="BaseColumn">
+        id,url_path,api_describe,status,create_time,update_time,delete_time
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM api
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM api
+        WHERE id=#{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM api
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="cloud.icepan.rbac.model.Api">
+        INSERT INTO api(url_path, api_describe, status, update_time, create_time)
+        VALUES (#{urlPath,jdbcType=VARCHAR},
+                #{apiDescribe,jdbcType=VARCHAR},
+                #{status,jdbcType=BOOLEAN},
+                #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+</mapper>
