@@ -1,6 +1,7 @@
 package cloud.icepan.rbac.service;
 
 import cloud.icepan.rbac.dao.RoleMapper;
+import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.Role;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,9 @@ public class RoleService {
 
     public List<Role> getAll() {
         return roleMapper.selectAll();
+    }
+
+    public Role getById(Integer id) {
+        return roleMapper.selectByPrimaryKey(id);
     }
 }

@@ -1,6 +1,7 @@
 package cloud.icepan.rbac.service;
 
 import cloud.icepan.rbac.dao.PermissionMapper;
+import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.Permission;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,9 @@ public class PermissionService {
 
     public List<Permission> getAll() {
         return permissionMapper.selectAll();
+    }
+
+    public Permission getById(Integer id) {
+        return permissionMapper.selectByPrimaryKey(id);
     }
 }

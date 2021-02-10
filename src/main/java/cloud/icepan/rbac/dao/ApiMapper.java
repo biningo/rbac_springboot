@@ -12,8 +12,4 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ApiMapper extends BaseMapper<Api> {
-    int insert(Api api);
-
-    int delete(Api api);
-
 }

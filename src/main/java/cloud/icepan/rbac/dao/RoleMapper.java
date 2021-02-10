@@ -1,6 +1,5 @@
 package cloud.icepan.rbac.dao;
 
-import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +12,4 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
-    int insert(Role role);
-
-    int delete(Role role);
 }

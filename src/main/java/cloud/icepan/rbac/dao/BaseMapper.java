@@ -1,5 +1,7 @@
 package cloud.icepan.rbac.dao;
 
+import cloud.icepan.rbac.model.Api;
+
 import java.util.List;
 
 /***
@@ -16,4 +18,8 @@ interface BaseMapper<T> {
     List<T> selectAll();
 
     T selectByPrimaryKey(Integer id);
+
+    int insert(T entry);
+
+    int delete(T entry);
 }

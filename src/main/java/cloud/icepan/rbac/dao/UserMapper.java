@@ -1,6 +1,5 @@
 package cloud.icepan.rbac.dao;
 
-import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +12,4 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    int insert(User user);
-
-    int delete(User user);
 }

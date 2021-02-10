@@ -1,6 +1,7 @@
 package cloud.icepan.rbac.service;
 
 import cloud.icepan.rbac.dao.UserMapper;
+import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.User;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,10 @@ public class UserService {
 
     public List<User> getAll() {
         return userMapper.selectAll();
+    }
+
+    public User getById(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
     }
 
 }

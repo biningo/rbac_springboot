@@ -41,5 +41,9 @@ public class ApiService {
         return apiMapper.selectAll();
     }
 
+    public Api getById(Integer id) {
+        return apiMapper.selectByPrimaryKey(id);
+    }
+
 
 }

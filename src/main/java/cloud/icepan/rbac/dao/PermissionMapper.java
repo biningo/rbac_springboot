@@ -1,6 +1,5 @@
 package cloud.icepan.rbac.dao;
 
-import cloud.icepan.rbac.model.Api;
 import cloud.icepan.rbac.model.Permission;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,7 +12,4 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
-    int insert(Permission permission);
-
-    int delete(Permission permission);
 }
