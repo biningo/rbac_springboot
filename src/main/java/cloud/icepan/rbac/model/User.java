@@ -10,36 +10,23 @@ import java.sql.Timestamp;
  ***/
 
 
-public class User {
-    private Integer id;
+public class User extends BaseModel {
     private String username;
     private String password;
     private String avatarUrl;
     private String userDescribe;
     private Integer roleId;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private Timestamp deleteTime;
 
     public User() {
     }
 
-    public User(String username, String password, String avatarUrl, String userDescribe, Integer roleId, Timestamp createTime) {
+    public User(Integer id, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime, Boolean status, String username, String password, String avatarUrl, String userDescribe, Integer roleId) {
+        super(id, createTime, updateTime, deleteTime, status);
         this.username = username;
         this.password = password;
         this.avatarUrl = avatarUrl;
         this.userDescribe = userDescribe;
         this.roleId = roleId;
-        this.createTime = createTime;
-        this.updateTime = createTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -80,29 +67,5 @@ public class User {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
-
-    public void setDeleteTime(Timestamp deleteTime) {
-        this.deleteTime = deleteTime;
     }
 }

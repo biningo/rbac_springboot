@@ -1,56 +1,59 @@
-create table api
+SHOW TABLES ;
+DROP TABLE IF EXISTS api,role,user,api_permission,role_permission;
+
+CREATE TABLE IF NOT EXISTS api
 (
     id           INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    url_path     VARCHAR(50)                    NOT NULL,
-    api_describe VARCHAR(300)                   NOT NULL,
-    status       BOOL DEFAULT 0                 NOT NULL,
-    update_time  TIMESTAMP                      NOT NULL,
     create_time  TIMESTAMP                      NOT NULL,
-    delete_time  TIMESTAMP
+    update_time  TIMESTAMP                      NOT NULL,
+    delete_time  TIMESTAMP,
+    status       BOOL DEFAULT 0                 NOT NULL,
+    url_path     VARCHAR(50)                    NOT NULL,
+    api_describe VARCHAR(300)                   NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-create table permission
+CREATE TABLE IF NOT EXISTS permission
 (
     id                  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    title               VARCHAR(50)                    NOT NULL,
-    permission_describe VARCHAR(300)                   NOT NULL,
-    status              BOOL DEFAULT 0                 NOT NULL,
-    update_time         TIMESTAMP                      NOT NULL,
     create_time         TIMESTAMP                      NOT NULL,
-    delete_time         TIMESTAMP
+    update_time         TIMESTAMP                      NOT NULL,
+    delete_time         TIMESTAMP,
+    status              BOOL DEFAULT 0                 NOT NULL,
+    title               VARCHAR(50)                    NOT NULL,
+    permission_describe VARCHAR(300)                   NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-create table role
+CREATE TABLE IF NOT EXISTS role
 (
     id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    title         VARCHAR(50)                    NOT NULL,
-    role_describe VARCHAR(300)                   NOT NULL,
-    status        BOOL DEFAULT 0                 NOT NULL,
-    update_time   TIMESTAMP                      NOT NULL,
     create_time   TIMESTAMP                      NOT NULL,
-    delete_time   TIMESTAMP
+    update_time   TIMESTAMP                      NOT NULL,
+    delete_time   TIMESTAMP,
+    status        BOOL DEFAULT 0                 NOT NULL,
+    title         VARCHAR(50)                    NOT NULL,
+    role_describe VARCHAR(300)                   NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-create table user
+CREATE TABLE IF NOT EXISTS user
 (
     id            INT PRIMARY KEY AUTO_INCREMENT,
-    username      VARCHAR(100) NOT NULL,
-    password      VARCHAR(50)  NOT NULL,
+    create_time   TIMESTAMP      NOT NULL,
+    update_time   TIMESTAMP      NOT NULL,
+    delete_time   TIMESTAMP,
+    status        BOOL DEFAULT 0 NOT NULL,
+    username      VARCHAR(100)   NOT NULL,
+    password      VARCHAR(50)    NOT NULL,
     avatar_url    VARCHAR(200),
     user_describe VARCHAR(300),
-    update_time   TIMESTAMP    NOT NULL,
-    create_time   TIMESTAMP    NOT NULL,
-    delete_time   TIMESTAMP,
-    role_id       INT          NOT NULL,
+    role_id       INT            NOT NULL,
     FOREIGN KEY fk_role (role_id) REFERENCES role (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
-
-create table api_permission
+CREATE TABLE IF NOT EXISTS api_permission
 (
     id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     api_id        INT                            NOT NULL,
@@ -60,7 +63,8 @@ create table api_permission
     UNIQUE uq_api_permission (api_id, permission_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
-create table role_permission
+
+CREATE TABLE IF NOT EXISTS role_permission
 (
     id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     role_id       INT                            NOT NULL,
@@ -70,3 +74,5 @@ create table role_permission
     UNIQUE uq_role_permission (role_id, permission_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+SHOW TABLES ;

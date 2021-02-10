@@ -17,35 +17,53 @@ import java.util.List;
  ***/
 
 @Service
-public class UserService {
+public class UserService implements BaseService<User> {
 
     @Resource
     UserMapper userMapper;
 
-
-    public boolean createUser(User user) {
-        user.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        user.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        int flag = userMapper.insert(user);
-        return flag > 0;
+    @Override
+    public int create(User user) {
+        return userMapper.insert(user);
     }
 
-    public boolean deleteUser(User user) {
-        int flag = userMapper.delete(user);
-        return flag > 0;
+    @Override
+    public int deleteById(Integer id) {
+        return userMapper.deleteByPrimaryKey(id);
     }
 
-    public boolean deleteUser(Integer id) {
-        int flag = userMapper.deleteByPrimaryKey(id);
-        return flag > 0;
+    @Override
+    public int deleteByAnd(User user) {
+        return userMapper.deleteByAnd(user);
     }
 
+    @Override
+    public int deleteByOr(User user) {
+        return userMapper.deleteByOr(user);
+    }
+
+    @Override
     public List<User> getAll() {
         return userMapper.selectAll();
     }
 
+    @Override
+    public List<User> getByAnd(User user) {
+        return userMapper.selectByAnd(user);
+    }
+
+    @Override
+    public List<User> getByOr(User user) {
+        return userMapper.selectByOr(user);
+    }
+
+    @Override
     public User getById(Integer id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public int updateById(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

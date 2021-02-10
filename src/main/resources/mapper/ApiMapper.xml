@@ -3,23 +3,150 @@
 <mapper namespace="cloud.icepan.rbac.dao.ApiMapper">
     <resultMap id="BaseResultMap" type="cloud.icepan.rbac.model.Api">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="url_path" property="urlPath" jdbcType="VARCHAR"/>
-        <result column="api_describe" property="apiDescribe" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="BOOLEAN"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="BOOLEAN"/>
+        <result column="url_path" property="urlPath" jdbcType="VARCHAR"/>
+        <result column="api_describe" property="apiDescribe" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <sql id="BaseColumn">
-        id,url_path,api_describe,status,create_time,update_time,delete_time
+        id,create_time,update_time,delete_time,url_path,status,
+        api_describe
     </sql>
+
+    <sql id="SelectiveAndIf">
+        <if test="create_time!=null">
+            create_time=#{createTime,jdbcType=TIMESTAMP} AND
+        </if>
+        <if test="update_time!=null">
+            update_time=#{updateTime,jdbcType=TIMESTAMP} AND
+        </if>
+        <if test="delete_time!=null">
+            delete_time=#{deleteTime,jdbcType=TIMESTAMP} AND
+        </if>
+        <if test="status!=null">
+            status=#{status,jdbcType=BOOLEAN} AND
+        </if>
+        <if test="url_path!=null">
+            url_path=#{urlPath,jdbcType=VARCHAR} AND
+        </if>
+        <if test="api_describe!=null">
+            api_describe=#{apiDescribe,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <sql id="SelectiveOrIf">
+        <if test="create_time!=null">
+            create_time=#{createTime,jdbcType=TIMESTAMP} OR
+        </if>
+        <if test="update_time!=null">
+            update_time=#{updateTime,jdbcType=TIMESTAMP} OR
+        </if>
+        <if test="delete_time!=null">
+            delete_time=#{deleteTime,jdbcType=TIMESTAMP} OR
+        </if>
+        <if test="status!=null">
+            status=#{status,jdbcType=BOOLEAN} OR
+        </if>
+        <if test="url_path!=null">
+            url_path=#{urlPath,jdbcType=VARCHAR} OR
+        </if>
+        <if test="api_describe!=null">
+            api_describe=#{apiDescribe,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="cloud.icepan.rbac.model.Api">
+        INSERT INTO api
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="create_time!=null">
+                create_time,
+            </if>
+            <if test="update_time!=null">
+                update_time,
+            </if>
+            <if test="delete_time!=null">
+                delete_time,
+            </if>
+            <if test="status!=null">
+                status,
+            </if>
+            <if test="url_path!=null">
+                url_path,
+            </if>
+            <if test="api_describe!=null">
+                api_describe,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="create_time!=null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_time!=null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delete_time!=null">
+                #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status!=null">
+                #{status,jdbcType=BOOLEAN},
+            </if>
+            <if test="url_path!=null">
+                #{urlPath,jdbcType=VARCHAR},
+            </if>
+            <if test="api_describe!=null">
+                #{apiDescribe,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM api
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByAnd" parameterType="cloud.icepan.rbac.model.Api">
+        DELETE
+        FROM api
+        <where>
+            <include refid="SelectiveAndIf"/>
+        </where>
+    </delete>
+
+    <delete id="deleteByOr" parameterType="cloud.icepan.rbac.model.Api">
+        DELETE
+        FROM api
+        <where>
+            <include refid="SelectiveOrIf"/>
+        </where>
+    </delete>
+
 
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT
         <include refid="BaseColumn"/>
         FROM api
+    </select>
+
+    <select id="selectByAnd" resultMap="BaseResultMap" parameterType="cloud.icepan.rbac.model.Api">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM api
+        <where>
+            <include refid="SelectiveAndIf"/>
+        </where>
+    </select>
+
+    <select id="selectByOr" resultMap="BaseResultMap" parameterType="cloud.icepan.rbac.model.Api">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM api
+        <where>
+            <include refid="SelectiveOrIf"/>
+        </where>
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -29,20 +156,29 @@
         WHERE id=#{id,jdbcType=INTEGER}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        DELETE
-        FROM api
-        WHERE id = #{id,jdbcType=INTEGER}
-    </delete>
-
-    <insert id="insert" parameterType="cloud.icepan.rbac.model.Api">
-        INSERT INTO api(url_path, api_describe, status, update_time, create_time)
-        VALUES (#{urlPath,jdbcType=VARCHAR},
-                #{apiDescribe,jdbcType=VARCHAR},
-                #{status,jdbcType=BOOLEAN},
-                #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP})
-    </insert>
-
+    <update id="updateByPrimaryKeySelective" parameterType="cloud.icepan.rbac.model.Api">
+        update api
+        <set>
+            <if test="create_time!=null">
+                create_time=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_time!=null">
+                update_time=#{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delete_time!=null">
+                delete_time=#{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status!=null">
+                status=#{status,jdbcType=BOOLEAN},
+            </if>
+            <if test="url_path!=null">
+                url_path=#{urlPath,jdbcType=VARCHAR},
+            </if>
+            <if test="api_describe!=null">
+                api_describe=#{apiDescribe,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>

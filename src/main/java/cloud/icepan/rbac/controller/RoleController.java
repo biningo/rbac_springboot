@@ -20,25 +20,45 @@ public class RoleController {
     @Resource
     RoleService roleService;
 
+
+    @PostMapping("/create")
+    public int create(@RequestBody Role role) {
+        return roleService.create(role);
+    }
+
+    @DeleteMapping("/{id}")
+    public int deleteById(@PathVariable("id") Integer id) {
+        return roleService.deleteById(id);
+    }
+
+    @DeleteMapping("/{flag}")
+    public int delete(@PathVariable("flag") String flag, Role role) {
+        if (flag.toLowerCase().equals("and")) {
+            return roleService.deleteByAnd(role);
+        }
+        return roleService.deleteByOr(role);
+    }
+
     @GetMapping("/all")
     public List<Role> getAll() {
         return roleService.getAll();
     }
 
-    @PostMapping("/create")
-    public boolean createRole(@RequestBody Role role) {
-        return roleService.createRole(role);
+    @GetMapping("/{flag}")
+    public List<Role> get(Role role, @PathVariable("flag") String flag) {
+        if (flag.toLowerCase().equals("and")) {
+            return roleService.getByAnd(role);
+        }
+        return roleService.getByOr(role);
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteRoleById(@PathVariable("id") Integer id) {
-        return roleService.deleteRole(id);
+    @GetMapping("/{id}")
+    public Role getById(@PathVariable("id") Integer id) {
+        return roleService.getById(id);
     }
 
-    @PostMapping("/delete")
-    public boolean deleteRole(@RequestBody Role role) {
-        return roleService.deleteRole(role);
+    @PostMapping("/update")
+    public int updateById(@RequestBody Role role) {
+        return roleService.updateById(role);
     }
-
 }

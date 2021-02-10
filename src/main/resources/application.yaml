@@ -21,5 +21,7 @@ spring:
 
 mybatis:
   mapper-locations:
-#    mapper-locations: classpath*:mapper/*.xml,classpath*:com/urthink/upfs/**/*Mapper.xml
+    #    mapper-locations: classpath*:mapper/*.xml,classpath*:com/urthink/upfs/**/*Mapper.xml
     - classpath:mapper/*.xml
+  configuration:
+    use-generated-keys: true

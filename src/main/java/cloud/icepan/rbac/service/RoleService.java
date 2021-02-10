@@ -17,32 +17,52 @@ import java.util.List;
  ***/
 
 @Service
-public class RoleService {
+public class RoleService implements BaseService<Role> {
     @Resource
     RoleMapper roleMapper;
 
-    public boolean createRole(Role role) {
-        role.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        role.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        int flag = roleMapper.insert(role);
-        return flag > 0;
+    @Override
+    public int create(Role role) {
+        return roleMapper.insert(role);
     }
 
-    public boolean deleteRole(Role role) {
-        int flag = roleMapper.delete(role);
-        return flag > 0;
+    @Override
+    public int deleteById(Integer id) {
+        return roleMapper.deleteByPrimaryKey(id);
     }
 
-    public boolean deleteRole(Integer id) {
-        int flag = roleMapper.deleteByPrimaryKey(id);
-        return flag > 0;
+    @Override
+    public int deleteByAnd(Role role) {
+        return roleMapper.deleteByAnd(role);
     }
 
+    @Override
+    public int deleteByOr(Role role) {
+        return roleMapper.deleteByOr(role);
+    }
+
+    @Override
     public List<Role> getAll() {
         return roleMapper.selectAll();
     }
 
+    @Override
+    public List<Role> getByAnd(Role role) {
+        return roleMapper.selectByAnd(role);
+    }
+
+    @Override
+    public List<Role> getByOr(Role role) {
+        return roleMapper.selectByOr(role);
+    }
+
+    @Override
     public Role getById(Integer id) {
         return roleMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(Role role) {
+        return roleMapper.updateByPrimaryKeySelective(role);
     }
 }

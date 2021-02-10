@@ -16,34 +16,57 @@ import java.util.List;
  ***/
 
 @Service
-public class ApiService {
+public class ApiService implements BaseService<Api> {
     @Resource
     ApiMapper apiMapper;
 
-    public boolean createApi(Api api) {
-        api.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        api.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        int flag = apiMapper.insert(api);
-        return flag > 0;
+    @Override
+    public int create(Api entry) {
+        if (entry.getCreateTime() == null) {
+            entry.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            entry.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        }
+        return apiMapper.insert(entry);
     }
 
-    public boolean deleteApi(Api api) {
-        int flag = apiMapper.delete(api);
-        return flag > 0;
+    @Override
+    public int deleteById(Integer id) {
+        return apiMapper.deleteByPrimaryKey(id);
     }
 
-    public boolean deleteApi(Integer id) {
-        int flag = apiMapper.deleteByPrimaryKey(id);
-        return flag > 0;
+    @Override
+    public int deleteByOr(Api api) {
+        return apiMapper.deleteByOr(api);
     }
 
+    @Override
+    public int deleteByAnd(Api api) {
+        return apiMapper.deleteByAnd(api);
+    }
+
+
+    @Override
     public List<Api> getAll() {
         return apiMapper.selectAll();
     }
 
+    @Override
+    public List<Api> getByAnd(Api api) {
+        return apiMapper.selectByAnd(api);
+    }
+
+    @Override
+    public List<Api> getByOr(Api api) {
+        return apiMapper.selectByOr(api);
+    }
+
+    @Override
     public Api getById(Integer id) {
         return apiMapper.selectByPrimaryKey(id);
     }
 
-
+    @Override
+    public int updateById(Api api) {
+        return apiMapper.updateByPrimaryKeySelective(api);
+    }
 }

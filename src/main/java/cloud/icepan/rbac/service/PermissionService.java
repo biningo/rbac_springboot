@@ -17,31 +17,52 @@ import java.util.List;
  ***/
 
 @Service
-public class PermissionService {
+public class PermissionService implements BaseService<Permission> {
     @Resource
     PermissionMapper permissionMapper;
-    public boolean createPermission(Permission permission) {
-        permission.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        permission.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        int flag = permissionMapper.insert(permission);
-        return flag > 0;
+
+    @Override
+    public int create(Permission permission) {
+        return permissionMapper.insert(permission);
     }
 
-    public boolean deletePermission(Permission permission) {
-        int flag = permissionMapper.delete(permission);
-        return flag > 0;
+    @Override
+    public int deleteById(Integer id) {
+        return permissionMapper.deleteByPrimaryKey(id);
     }
 
-    public boolean deletePermission(Integer id) {
-        int flag = permissionMapper.deleteByPrimaryKey(id);
-        return flag > 0;
+    @Override
+    public int deleteByAnd(Permission permission) {
+        return permissionMapper.deleteByAnd(permission);
     }
 
+    @Override
+    public int deleteByOr(Permission permission) {
+        return permissionMapper.deleteByOr(permission);
+    }
+
+    @Override
     public List<Permission> getAll() {
         return permissionMapper.selectAll();
     }
 
+    @Override
+    public List<Permission> getByAnd(Permission permission) {
+        return permissionMapper.selectByAnd(permission);
+    }
+
+    @Override
+    public List<Permission> getByOr(Permission permission) {
+        return permissionMapper.selectByOr(permission);
+    }
+
+    @Override
     public Permission getById(Integer id) {
         return permissionMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateById(Permission permission) {
+        return permissionMapper.updateByPrimaryKeySelective(permission);
     }
 }

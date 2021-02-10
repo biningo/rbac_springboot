@@ -20,25 +20,46 @@ public class PermissionController {
     @Resource
     PermissionService permissionService;
 
+
+    @PostMapping("/create")
+    public int create(@RequestBody Permission permission) {
+        return permissionService.create(permission);
+    }
+
+    @DeleteMapping("/{id}")
+    public int deleteById(@PathVariable("id") Integer id) {
+        return permissionService.deleteById(id);
+    }
+
+    @DeleteMapping("/{flag}")
+    public int delete(@PathVariable("flag") String flag, Permission permission) {
+        if (flag.toLowerCase().equals("and")) {
+            return permissionService.deleteByAnd(permission);
+        }
+        return permissionService.deleteByOr(permission);
+    }
+
     @GetMapping("/all")
     public List<Permission> getAll() {
         return permissionService.getAll();
     }
 
-    @PostMapping("/create")
-    public boolean createPermission(@RequestBody Permission permission) {
-        return permissionService.createPermission(permission);
+    @GetMapping("/{flag}")
+    public List<Permission> get(Permission permission, @PathVariable("flag") String flag) {
+        if (flag.toLowerCase().equals("and")) {
+            return permissionService.getByAnd(permission);
+        }
+        return permissionService.getByOr(permission);
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public boolean deletePermissionById(@PathVariable("id") Integer id) {
-        return permissionService.deletePermission(id);
+    @GetMapping("/{id}")
+    public Permission getById(@PathVariable("id") Integer id) {
+        return permissionService.getById(id);
     }
 
-    @PostMapping("/delete")
-    public boolean deletePermission(@RequestBody Permission permission) {
-        return permissionService.deletePermission(permission);
+    @PostMapping("/update")
+    public int updateById(@RequestBody Permission permission) {
+        return permissionService.updateById(permission);
     }
 
 }

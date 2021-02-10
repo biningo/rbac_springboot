@@ -13,13 +13,23 @@ import java.util.List;
 
 
 interface BaseMapper<T> {
+    int insert(T entry);
+
     int deleteByPrimaryKey(Integer id);
+
+    int deleteByAnd(T entry);
+
+    int deleteByOr(T entry);
+
 
     List<T> selectAll();
 
+    List<T> selectByAnd(T entry);
+
+    List<T> selectByOr(T entry);
+
+
     T selectByPrimaryKey(Integer id);
 
-    int insert(T entry);
-
-    int delete(T entry);
+    int updateByPrimaryKeySelective(T entry);
 }

@@ -10,32 +10,18 @@ import java.sql.Timestamp;
  ***/
 
 
-public class Permission {
-    private Integer id;
+public class Permission extends BaseModel {
     private String title;
     private String permissionDescribe;
-    private Boolean status;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private Timestamp deleteTime;
+
 
     public Permission() {
     }
 
-    public Permission(String title, String permissionDescribe, Boolean status, Timestamp createTime) {
+    public Permission(Integer id, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime, Boolean status, String title, String permissionDescribe) {
+        super(id, createTime, updateTime, deleteTime, status);
         this.title = title;
         this.permissionDescribe = permissionDescribe;
-        this.status = status;
-        this.createTime = createTime;
-        this.updateTime = createTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -52,37 +38,5 @@ public class Permission {
 
     public void setPermissionDescribe(String permissionDescribe) {
         this.permissionDescribe = permissionDescribe;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
-
-    public void setDeleteTime(Timestamp deleteTime) {
-        this.deleteTime = deleteTime;
     }
 }

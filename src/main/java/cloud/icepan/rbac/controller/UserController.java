@@ -21,26 +21,46 @@ public class UserController {
     @Resource
     UserService userService;
 
+
+
+    @PostMapping("/create")
+    public int create(@RequestBody User user) {
+        return userService.create(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public int deleteById(@PathVariable("id") Integer id) {
+        return userService.deleteById(id);
+    }
+
+    @DeleteMapping("/{flag}")
+    public int delete(@PathVariable("flag") String flag, User user) {
+        if (flag.toLowerCase().equals("and")) {
+            return userService.deleteByAnd(user);
+        }
+        return userService.deleteByOr(user);
+    }
+
     @GetMapping("/all")
     public List<User> getAll() {
         return userService.getAll();
     }
 
-    @PostMapping("/create")
-    public boolean createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @GetMapping("/{flag}")
+    public List<User> get(User user, @PathVariable("flag") String flag) {
+        if (flag.toLowerCase().equals("and")) {
+            return userService.getByAnd(user);
+        }
+        return userService.getByOr(user);
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteUserById(@PathVariable("id") Integer id) {
-        return userService.deleteUser(id);
+    @GetMapping("/{id}")
+    public User getById(@PathVariable("id") Integer id) {
+        return userService.getById(id);
     }
 
-    @PostMapping("/delete")
-    public boolean deleteUser(@RequestBody User user) {
-        return userService.deleteUser(user);
+    @PostMapping("/update")
+    public int updateById(@RequestBody User user) {
+        return userService.updateById(user);
     }
-
-
 }

@@ -3,17 +3,18 @@
 <mapper namespace="cloud.icepan.rbac.dao.RoleMapper">
     <resultMap id="BaseResultMap" type="cloud.icepan.rbac.model.Role">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="role_describe" property="roleDescribe" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="BOOLEAN"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="BOOLEAN"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="role_describe" property="roleDescribe" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <sql id="BaseColumn">
-        id,title,role_describe,status,create_time,update_time,delete_time
+        id,create_time,update_time,delete_time,title,status,
+        role_describe
     </sql>
 
     <select id="selectAll" resultMap="BaseResultMap">

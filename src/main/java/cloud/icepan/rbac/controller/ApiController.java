@@ -20,25 +20,45 @@ public class ApiController {
     @Resource
     ApiService apiService;
 
+
+    @PostMapping("/create")
+    public int create(@RequestBody Api api) {
+        return apiService.create(api);
+    }
+
+    @DeleteMapping("/{id}")
+    public int deleteById(@PathVariable("id") Integer id) {
+        return apiService.deleteById(id);
+    }
+
+    @DeleteMapping("/{flag}")
+    public int delete(@PathVariable("flag") String flag, Api api) {
+        if (flag.toLowerCase().equals("and")) {
+            return apiService.deleteByAnd(api);
+        }
+        return apiService.deleteByOr(api);
+    }
+
     @GetMapping("/all")
     public List<Api> getAll() {
         return apiService.getAll();
     }
 
-    @PostMapping("/create")
-    public boolean createApi(@RequestBody Api api) {
-        return apiService.createApi(api);
+    @GetMapping("/{flag}")
+    public List<Api> get(Api api, @PathVariable("flag") String flag) {
+        if (flag.toLowerCase().equals("and")) {
+            return apiService.getByAnd(api);
+        }
+        return apiService.getByOr(api);
     }
 
-
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteApiById(@PathVariable("id") Integer id) {
-        return apiService.deleteApi(id);
+    @GetMapping("/{id}")
+    public Api getById(@PathVariable("id") Integer id) {
+        return apiService.getById(id);
     }
 
-    @PostMapping("/delete")
-    public boolean deleteApi(@RequestBody Api api) {
-        return apiService.deleteApi(api);
+    @PostMapping("/update")
+    public int updateById(@RequestBody Api api) {
+        return apiService.updateById(api);
     }
-
 }
